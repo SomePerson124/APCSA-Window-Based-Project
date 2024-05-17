@@ -11,17 +11,17 @@ public class MainFrame implements Runnable {
 
         title = "Game";
         windowWidth = 500;
-        windowHeight = 500;
-        JFrame mainFrame = new JFrame();
+        windowHeight = 700;
+        JFrame mainFrame = new JFrame(title);
 
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setTitle(title);
         mainFrame.setSize(windowWidth, windowHeight);
         mainFrame.setLocationRelativeTo(null);
-        mainFrame.setVisible(true);
 
         mainPanel = new GraphicsPanel();
         mainFrame.add(mainPanel);
+
+        mainFrame.setVisible(true);
 
         Thread thread = new Thread(this);
         thread.start();
