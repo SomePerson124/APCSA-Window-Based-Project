@@ -1,18 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
 
-    private int elixir;
+    private boolean[] elixir;
+    private int elixirTracker;
     private ArrayList<Placeholder> placeholders;
     private Timer timer;
 
     public GraphicsPanel() {
 
-        elixir = 0;
-
+        elixirTracker = 0;
+        elixir = new boolean[10];
         placeholders = new ArrayList<>();
         timer = new Timer(2800, this);
         timer.start();
@@ -27,6 +29,22 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        for (int i = 50; i <= 350; i += 100) {
+            g.drawRect(i, 500, 80, 100);
+        }
+
+        for (int i = 40; i < 440; i += 40) {
+            g.drawRect(i, 615, 40, 30);
+        }
+
+        for (int i = 0; i < elixir.length; i++) {
+            if (elixir[i]) {
+                g.setColor(Color.MAGENTA);
+                g.fillRect((i + 1) * 40, 615, 40, 30);
+                g.setColor(Color.BLACK);
+            }
+        }
 
         for (int i = 0; i < placeholders.size(); i++) {
             Placeholder placeholder = placeholders.get(i);
@@ -59,10 +77,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof Timer) {
-            if (elixir < 10) {
-                elixir++;
-            }
-            System.out.println(elixir);
+            elixir[elixirTracker] = true;
+            elixirTracker++;
         }
     }
 
