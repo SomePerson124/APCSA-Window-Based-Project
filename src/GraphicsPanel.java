@@ -76,7 +76,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void mouseExited(MouseEvent e) {}
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Timer) {
+        if (e.getSource() instanceof Timer && elixirTracker < 10) {
             elixir[elixirTracker] = true;
             elixirTracker++;
         }
