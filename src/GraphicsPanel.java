@@ -29,6 +29,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.drawString("Next: ", 10, 530);
+        g.drawRect(10, 540, 30, 40);
 
         for (int i = 50; i <= 350; i += 100) {
             g.drawRect(i, 500, 80, 100);
