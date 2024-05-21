@@ -26,10 +26,16 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     @Override
     public void paintComponent(Graphics g) {
+
         super.paintComponent(g);
         g.drawString("Next: ", 10, 530);
         g.drawRect(10, 540, 30, 40); //draws border for next card
         g.drawRect(0, 490, 500, 0); //draws divisor for cards selection and main game
+
+
+        g.drawRect(50, 70, 50, 50); //draws enemy tower 1
+        g.drawRect(382, 70, 50, 50); //draws enemy tower 2
+        g.drawRect(433, 70, 50, 0); //measure to check for even distance from sides
 
         g.drawRect(0, 230,500, 30); //draws bridge
 
