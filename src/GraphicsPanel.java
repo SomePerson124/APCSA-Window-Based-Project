@@ -29,19 +29,22 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         super.paintComponent(g);
         g.drawString("Next: ", 10, 530);
         g.drawRect(10, 540, 30, 40); //draws border for next card
+        g.drawRect(0, 490, 500, 0); //draws divisor for cards selection and main game
+
+        g.drawRect(0, 230,500, 30); //draws bridge
 
         for (int i = 50; i <= 350; i += 100) {
             g.drawRect(i, 500, 80, 100); //draws card borders
         }
 
         for (int i = 40; i < 440; i += 40) {
-            g.drawRect(i, 615, 40, 30);
+            g.drawRect(i, 615, 40, 30); //draws elixir bar
         }
 
         for (int i = 0; i < elixir.getElixirBar().length; i++) {
             if (elixir.getElixirBar()[i]) {
                 g.setColor(Color.MAGENTA);
-                g.fillRect((i + 1) * 40, 615, 40, 30); //draws elixir bar
+                g.fillRect((i + 1) * 40, 615, 40, 30); //draws elixir
                 g.setColor(Color.BLACK);
             }
         }
