@@ -6,15 +6,13 @@ import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
 
-    private boolean[] elixir;
-    private int elixirTracker;
+    private Elixir elixir;
     private ArrayList<Placeholder> placeholders;
     private Timer timer;
 
     public GraphicsPanel() {
 
-        elixirTracker = 0;
-        elixir = new boolean[10];
+        elixir = new Elixir();
         placeholders = new ArrayList<>();
         timer = new Timer(2800, this);
         timer.start();
@@ -30,20 +28,20 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawString("Next: ", 10, 530);
-        g.drawRect(10, 540, 30, 40);
+        g.drawRect(10, 540, 30, 40); //draws border for next card
 
         for (int i = 50; i <= 350; i += 100) {
-            g.drawRect(i, 500, 80, 100);
+            g.drawRect(i, 500, 80, 100); //draws card borders
         }
 
         for (int i = 40; i < 440; i += 40) {
             g.drawRect(i, 615, 40, 30);
         }
 
-        for (int i = 0; i < elixir.length; i++) {
-            if (elixir[i]) {
+        for (int i = 0; i < elixir.getElixirBar().length; i++) {
+            if (elixir.getElixirBar()[i]) {
                 g.setColor(Color.MAGENTA);
-                g.fillRect((i + 1) * 40, 615, 40, 30);
+                g.fillRect((i + 1) * 40, 615, 40, 30); //draws elixir bar
                 g.setColor(Color.BLACK);
             }
         }
@@ -78,9 +76,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void mouseExited(MouseEvent e) {}
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Timer && elixirTracker < 10) {
-            elixir[elixirTracker] = true;
-            elixirTracker++;
+        if (e.getSource() instanceof Timer && elixir.getElixirAmt() < 10) {
+            elixir.getElixirBar()[elixir.getElixirAmt()] = true; //generates elixir
+            elixir.addElixir();
         }
     }
 
