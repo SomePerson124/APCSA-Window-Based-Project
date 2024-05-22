@@ -39,7 +39,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         g.drawRect(50, 370, 50, 50); //draws tower 1
         g.drawRect(382, 370, 50, 50); //draws tower 2
 
-        g.drawRect(75, 10, 208, 0); //measure to check for even distance from sides
+        g.drawRect(0, 43, 208, 20);
 
         g.drawRect(60, 120, 30, 110); //draws enemy tower pathway 1
         g.drawRect(392, 120, 30, 110); //draws enemy tower pathway 2
