@@ -4,20 +4,24 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Placeholder {
+public class River {
 
+    private BufferedImage image;
     private int xCoord;
     private int yCoord;
-    private BufferedImage image;
 
-    public Placeholder(int x, int y) {
-        xCoord = x;
-        yCoord = y;
+    public River(int x, int y) {
         try {
-            image = ImageIO.read(new File("src/Assets/placeholder.png"));
+            image = ImageIO.read(new File("src/Assets/river.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        xCoord = x;
+        yCoord = y;
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 
     public int getxCoord() {
@@ -28,11 +32,7 @@ public class Placeholder {
         return yCoord;
     }
 
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public Rectangle placeholderRect() {
+    public Rectangle riverRect() {
         int imageWidth = getImage().getWidth();
         int imageHeight = getImage().getHeight();
         Rectangle rect = new Rectangle(xCoord, yCoord, imageWidth, imageHeight);

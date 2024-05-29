@@ -1,18 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
 
     private Elixir elixir;
+    private River river;
     private ArrayList<Placeholder> placeholders;
     private Timer timer;
 
     public GraphicsPanel() {
 
         elixir = new Elixir();
+        river = new River(0, 230);
         placeholders = new ArrayList<>();
         timer = new Timer(2800, this);
         timer.start();
@@ -58,6 +61,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         g.drawRect(0, 230,500, 30); //draws river
         g.drawRect(60, 230, 30, 30); //draws bridge (left)
         g.drawRect(392, 230, 30, 30); //draw bridge (right)
+
+        g.drawImage(river.getImage(), river.getxCoord(), river.getyCoord(), null);
 
         for (int i = 50; i <= 350; i += 100) {
             g.drawRect(i, 500, 80, 100); //draws card borders
