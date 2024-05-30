@@ -15,6 +15,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private TowerPathway towerPathway2;
     private TowerPathway enemyTowerPathway1;
     private TowerPathway enemyTowerPathway2;
+    private TowerPathway mainTowerPathwayDown1;
+    private TowerPathway mainTowerPathwayDown2;
+    private TowerPathway enemyMainTowerPathwayDown1;
+    private TowerPathway enemyMainTowerPathwayDown2;
     private ArrayList<Placeholder> placeholders;
     private Timer timer;
 
@@ -27,10 +31,15 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         bridgeLeft = new Bridge(60, 230);
         bridgeRight = new Bridge(392, 230);
 
-        towerPathway1 = new TowerPathway(60, 260);
-        towerPathway2 = new TowerPathway(392, 260);
-        enemyTowerPathway1 = new TowerPathway(60, 120);
-        enemyTowerPathway2 = new TowerPathway(392, 120);
+        towerPathway1 = new TowerPathway(60, 260, "tower");
+        towerPathway2 = new TowerPathway(392, 260, "tower");
+        enemyTowerPathway1 = new TowerPathway(60, 120, "tower");
+        enemyTowerPathway2 = new TowerPathway(392, 120, "tower");
+
+        mainTowerPathwayDown1 = new TowerPathway(60, 420, "down");
+        mainTowerPathwayDown2 = new TowerPathway(392, 420, "down");
+        enemyMainTowerPathwayDown1 = new TowerPathway(60, 43, "down");
+        enemyMainTowerPathwayDown2 = new TowerPathway(392, 43, "down");
 
         placeholders = new ArrayList<>();
         timer = new Timer(2800, this);
@@ -63,6 +72,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         g.drawRect(60, 43, 30, 27); //draws enemy main tower pathway (down 1)
         g.drawRect(392, 43, 30, 27); //draws enemy main tower pathway (down 2)
 
+        g.drawImage(enemyMainTowerPathwayDown1.getImage(), enemyMainTowerPathwayDown1.getxCoord(), enemyMainTowerPathwayDown1.getyCoord(), null);
+        g.drawImage(enemyMainTowerPathwayDown2.getImage(), enemyMainTowerPathwayDown2.getxCoord(), enemyMainTowerPathwayDown2.getyCoord(), null);
+
         g.drawRect(60, 120, 30, 110); //draws enemy tower pathway 1
         g.drawRect(392, 120, 30, 110); //draws enemy tower pathway 2
 
@@ -70,6 +82,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         g.drawRect(274, 427, 118, 20); //draws main tower pathway (right)
         g.drawRect(60, 420, 30, 27); //draws main tower pathway (down 1)
         g.drawRect(392, 420, 30, 27); //draws main tower pathway (down 2)
+
+        g.drawImage(mainTowerPathwayDown1.getImage(), mainTowerPathwayDown1.getxCoord(), mainTowerPathwayDown1.getyCoord(), null); //draws main tower pathway down 1
+        g.drawImage(mainTowerPathwayDown2.getImage(), mainTowerPathwayDown2.getxCoord(), mainTowerPathwayDown2.getyCoord(), null); //draws main tower pathway down 2
 
         g.drawRect(60, 260, 30, 110); //draws tower pathway 1
         g.drawRect(392, 260, 30, 110); //draws tower pathway 2
