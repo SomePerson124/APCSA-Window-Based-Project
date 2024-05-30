@@ -9,13 +9,29 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     private Elixir elixir;
     private River river;
+    private Bridge bridgeLeft;
+    private Bridge bridgeRight;
+    private TowerPathway towerPathway1;
+    private TowerPathway towerPathway2;
+    private TowerPathway enemyTowerPathway1;
+    private TowerPathway enemyTowerPathway2;
     private ArrayList<Placeholder> placeholders;
     private Timer timer;
 
     public GraphicsPanel() {
 
         elixir = new Elixir();
+
         river = new River(0, 230);
+
+        bridgeLeft = new Bridge(60, 230);
+        bridgeRight = new Bridge(392, 230);
+
+        towerPathway1 = new TowerPathway(60, 260);
+        towerPathway2 = new TowerPathway(392, 260);
+        enemyTowerPathway1 = new TowerPathway(60, 120);
+        enemyTowerPathway2 = new TowerPathway(392, 120);
+
         placeholders = new ArrayList<>();
         timer = new Timer(2800, this);
         timer.start();
@@ -58,11 +74,18 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         g.drawRect(60, 260, 30, 110); //draws tower pathway 1
         g.drawRect(392, 260, 30, 110); //draws tower pathway 2
 
+        g.drawImage(towerPathway1.getImage(), towerPathway1.getxCoord(), towerPathway1.getyCoord(), null); //draws tower pathway 1
+        g.drawImage(towerPathway2.getImage(), towerPathway2.getxCoord(), towerPathway2.getyCoord(), null); //draws tower pathway 2
+        g.drawImage(enemyTowerPathway1.getImage(), enemyTowerPathway1.getxCoord(), enemyTowerPathway1.getyCoord(), null); //draws enemy tower pathway 1
+        g.drawImage(enemyTowerPathway2.getImage(), enemyTowerPathway2.getxCoord(), enemyTowerPathway2.getyCoord(), null); //draws enemy tower pathway 2
+
         g.drawRect(0, 230,500, 30); //draws river
         g.drawRect(60, 230, 30, 30); //draws bridge (left)
         g.drawRect(392, 230, 30, 30); //draw bridge (right)
 
-        g.drawImage(river.getImage(), river.getxCoord(), river.getyCoord(), null);
+        g.drawImage(river.getImage(), river.getxCoord(), river.getyCoord(), null); //draws river
+        g.drawImage(bridgeLeft.getImage(), bridgeLeft.getxCoord(), bridgeLeft.getyCoord(), null); //draws left bridge
+        g.drawImage(bridgeRight.getImage(), bridgeRight.getxCoord(), bridgeRight.getyCoord(), null); //draws right bridge
 
         for (int i = 50; i <= 350; i += 100) {
             g.drawRect(i, 500, 80, 100); //draws card borders
