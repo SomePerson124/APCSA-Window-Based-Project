@@ -25,7 +25,7 @@ public class TowerPathway {
             }
         } else {
             try {
-                image = ImageIO.read(new File("src/Assets/towerpathway.png"));
+                image = ImageIO.read(new File("src/Assets/towerpathwayside.png"));
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
