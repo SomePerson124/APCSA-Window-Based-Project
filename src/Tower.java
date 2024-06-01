@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class MainTower {
+public class Tower {
 
     private BufferedImage image;
     private int towerHealth;
@@ -14,19 +14,19 @@ public class MainTower {
     private int xCoord;
     private int yCoord;
 
-    public MainTower(int x, int y, String type) {
+    public Tower(int x, int y, String type) {
         try {
             if (type.equals("enemy")) {
-                image = ImageIO.read(new File("src/Assets/enemymaintower.png"));
+                image = ImageIO.read(new File("src/Assets/enemytower.png"));
             } else {
-                image = ImageIO.read(new File("src/Assets/maintower.png"));
+                image = ImageIO.read(new File("src/Assets/tower.png"));
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        towerHealth = 6000;
+        towerHealth = 4000;
         towerDamage = 150;
-        attackSpeed = 1000;
+        attackSpeed = 800;
         xCoord = x;
         yCoord = y;
     }
@@ -43,7 +43,7 @@ public class MainTower {
         return image;
     }
 
-    public Rectangle mainTowerRect() {
+    public Rectangle towerRect() {
         int imageWidth = getImage().getWidth();
         int imageHeight = getImage().getHeight();
         Rectangle rect = new Rectangle(xCoord, yCoord, imageWidth, imageHeight);

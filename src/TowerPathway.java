@@ -11,24 +11,16 @@ public class TowerPathway {
     private int yCoord;
 
     public TowerPathway(int x, int y, String type) {
-        if (type.equals("tower")) {
-            try {
+        try {
+            if (type.equals("tower")) {
                 image = ImageIO.read(new File("src/Assets/towerpathway.png"));
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        } else if (type.equals("down")) {
-            try {
+            } else if (type.equals("down")) {
                 image = ImageIO.read(new File("src/Assets/towerpathwaydown.png"));
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        } else {
-            try {
+            } else {
                 image = ImageIO.read(new File("src/Assets/towerpathwayside.png"));
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
             }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
         xCoord = x;
         yCoord = y;

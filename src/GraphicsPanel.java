@@ -27,6 +27,12 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private TowerPathway mainTowerPathwayRight;
     private TowerPathway enemyMainTowerPathwayLeft;
     private TowerPathway enemyMainTowerPathwayRight;
+    private Tower towerLeft;
+    private Tower towerRight;
+    private Tower enemyTowerLeft;
+    private Tower enemyTowerRight;
+    private MainTower mainTower;
+    private MainTower enemyMainTower;
     private ArrayList<Placeholder> placeholders;
     private Timer timer;
 
@@ -61,6 +67,14 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         enemyMainTowerPathwayLeft = new TowerPathway(90, 43, "side");
         enemyMainTowerPathwayRight = new TowerPathway(274, 43, "side");
 
+        towerLeft = new Tower(50, 370, "player");
+        towerRight = new Tower(382, 370, "player");
+        enemyTowerLeft = new Tower(50, 70, "enemy");
+        enemyTowerRight = new Tower(382, 70, "enemy");
+
+        mainTower = new MainTower(209, 405, "player");
+        enemyMainTower = new MainTower(209, 20, "enemy");
+
         placeholders = new ArrayList<>();
         timer = new Timer(2800, this);
         timer.start();
@@ -76,18 +90,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
+
         g.drawImage(background, 0, 0, null);
         g.drawImage(cardTable, 0, 490, null);
         g.drawString("Next: ", 10, 530);
+
         g.drawRect(10, 540, 30, 40); //draws border for next card
         g.drawRect(0, 490, 500, 0); //draws divisor for cards selection and main game
-
-        g.drawRect(209, 20, 65, 65); //draws enemy main tower
-        g.drawRect(50, 70, 50, 50); //draws enemy tower 1
-        g.drawRect(382, 70, 50, 50); //draws enemy tower 2
-        g.drawRect(209, 405, 65, 65); //draw main tower
-        g.drawRect(50, 370, 50, 50); //draws tower 1
-        g.drawRect(382, 370, 50, 50); //draws tower 2
 
         g.drawRect(90, 43, 119, 20); //draws enemy main tower pathway (left)
         g.drawRect(274, 43, 118, 20); //draws enemy main tower pathway (right)
@@ -118,6 +127,22 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         g.drawImage(towerPathway2.getImage(), towerPathway2.getxCoord(), towerPathway2.getyCoord(), null); //draws tower pathway 2
         g.drawImage(enemyTowerPathway1.getImage(), enemyTowerPathway1.getxCoord(), enemyTowerPathway1.getyCoord(), null); //draws enemy tower pathway 1
         g.drawImage(enemyTowerPathway2.getImage(), enemyTowerPathway2.getxCoord(), enemyTowerPathway2.getyCoord(), null); //draws enemy tower pathway 2
+
+        g.drawRect(209, 20, 65, 65); //draws enemy main tower
+        g.drawRect(50, 70, 50, 50); //draws enemy tower 1
+        g.drawRect(382, 70, 50, 50); //draws enemy tower 2
+
+        g.drawImage(enemyMainTower.getImage(), enemyMainTower.getxCoord(), enemyMainTower.getyCoord(), null); //draws enemy main tower
+        g.drawImage(enemyTowerLeft.getImage(), enemyTowerLeft.getxCoord(), enemyTowerLeft.getyCoord(), null); //draws enemy tower 1
+        g.drawImage(enemyTowerRight.getImage(), enemyTowerRight.getxCoord(), enemyTowerRight.getyCoord(), null); //draws enemy tower 2
+
+        g.drawRect(209, 405, 65, 65); //draw main tower
+        g.drawRect(50, 370, 50, 50); //draws tower 1
+        g.drawRect(382, 370, 50, 50); //draws tower 2
+
+        g.drawImage(mainTower.getImage(), mainTower.getxCoord(), mainTower.getyCoord(), null); //draws main tower
+        g.drawImage(towerLeft.getImage(), towerLeft.getxCoord(), towerLeft.getyCoord(), null); //draws tower 1
+        g.drawImage(towerRight.getImage(), towerRight.getxCoord(), towerRight.getyCoord(), null); //draws tower 2
 
         g.drawRect(0, 230,500, 30); //draws river
         g.drawRect(60, 230, 30, 30); //draws bridge (left)
