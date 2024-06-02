@@ -156,16 +156,16 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             g.drawRect(i, 500, 80, 100); //draws card borders
         }
 
-        for (int i = 40; i < 440; i += 40) {
-            g.drawRect(i, 615, 40, 30); //draws elixir bar
-        }
-
         for (int i = 0; i < elixir.getElixirBar().length; i++) {
             if (elixir.getElixirBar()[i]) {
                 g.setColor(Color.MAGENTA);
                 g.fillRect((i + 1) * 40, 615, 40, 30); //draws elixir
                 g.setColor(Color.BLACK);
             }
+        }
+
+        for (int i = 40; i < 440; i += 40) {
+            g.drawRect(i, 615, 40, 30); //draws elixir bar
         }
 
         for (int i = 0; i < placeholders.size(); i++) {
