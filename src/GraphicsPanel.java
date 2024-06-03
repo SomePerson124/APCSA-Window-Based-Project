@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
 
-    BufferedImage log;
+    private Card cards;
+
     private BufferedImage background;
     private BufferedImage cardTable;
     private Elixir elixir;
@@ -38,6 +39,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private Timer timer;
 
     public GraphicsPanel() {
+
+        cards = new Card(0, 0, "hi");
 
         try {
             background = ImageIO.read(new File("src/Assets/background.png"));
@@ -155,12 +158,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
         for (int i = 50; i <= 350; i += 100) {
             g.drawRect(i, 500, 80, 100); //draws card borders
-            try {
-                log = ImageIO.read(new File("src/Assets/orange.png"));
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-            g.drawImage(log, i, 500, null);
         }
 
         for (int i = 0; i < elixir.getElixirBar().length; i++) {
