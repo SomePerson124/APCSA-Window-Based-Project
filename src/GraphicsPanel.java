@@ -34,6 +34,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private MainTower mainTower;
     private MainTower enemyMainTower;
     private ArrayList<Placeholder> placeholders;
+    private ArrayList<Card> cards;
     private Timer timer;
 
     public GraphicsPanel() {
@@ -76,6 +77,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         enemyMainTower = new MainTower(209, 20, "enemy");
 
         placeholders = new ArrayList<>();
+        cards = randomStart();
+        System.out.println(cards.get(0).getTroop());
         timer = new Timer(2800, this);
         timer.start();
 
@@ -83,7 +86,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
-        randomStart();
+
     }
 
     @Override
@@ -96,8 +99,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         g.drawString("Next: ", 10, 530);
 
         g.drawRect(10, 540, 30, 40); //draws border for next card
-        //Image next = cards.getCards()[4].getScaledInstance(30, 40, Image.SCALE_DEFAULT);
-        //g.drawImage(next, 10, 540, null);
+        Image next = cards.get(4).getCardImage().getScaledInstance(30, 40, Image.SCALE_DEFAULT);
+        g.drawImage(next, 10, 540, null);
         g.drawRect(0, 490, 500, 0); //draws divisor for cards selection and main game
 
         g.drawRect(90, 43, 119, 20); //draws enemy main tower pathway (left)
@@ -156,6 +159,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
         for (int i = 50; i <= 350; i += 100) {
             g.drawRect(i, 500, 80, 100); //draws card borders
+            g.drawImage(cards.get(i / 100).getCardImage(), i, 500, null); //draws cards
         }
 
         for (int i = 0; i < elixir.getElixirBar().length; i++) {
@@ -206,18 +210,28 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         }
     }
 
-    private ArrayList<Integer> randomStart() {
-        ArrayList<Integer> nums = new ArrayList<Integer>();
+    private ArrayList<Card> randomStart() {
+        ArrayList<Card> cards = new ArrayList<Card>();
         ArrayList<Integer> numsUsed = new ArrayList<>();
         int randomNum = (int) (Math.random() * 5) + 1;
         for (int i = 0; i < 5; i++) {
             while (!isAvailable(numsUsed, randomNum)) {
                 randomNum = (int) (Math.random() * 5) + 1;
             }
-            nums.add(randomNum);
+            if (randomNum == 1) {
+                cards.add(new Apple("src/Assets/appleplayer.png", 0, 0));
+            } else if (randomNum == 2) {
+                cards.add(new Corn("src/Assets/cornplayer.png", 0, 0));
+            } else if (randomNum == 3) {
+                cards.add(new Log("src/Assets/logplayer.png", 0, 0));
+            } else if (randomNum == 4) {
+                cards.add(new Watermelon("src/Assets/watermelonplayer.png", 0, 0));
+            } else {
+                cards.add(new Orange("src/Assets/orangeplayer.png", 0, 0));
+            }
             useNum(numsUsed, randomNum);
         }
-        return nums;
+        return cards;
     }
 
     private boolean isAvailable(ArrayList<Integer> numsUsed, int numToUse) {
