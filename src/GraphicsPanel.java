@@ -99,6 +99,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         g.drawString("Next: ", 10, 530);
 
         g.drawRect(10, 540, 30, 40); //draws border for next card
+        Image next = cards.getCards()[4].getScaledInstance(30, 40, Image.SCALE_DEFAULT);
+        g.drawImage(next, 10, 540, null);
         g.drawRect(0, 490, 500, 0); //draws divisor for cards selection and main game
 
         g.drawRect(90, 43, 119, 20); //draws enemy main tower pathway (left)
@@ -157,6 +159,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
         for (int i = 50; i <= 350; i += 100) {
             g.drawRect(i, 500, 80, 100); //draws card borders
+            g.drawImage(cards.getCards()[i / 100], i, cards.getyCoord(), null);
         }
 
         for (int i = 0; i < elixir.getElixirBar().length; i++) {
