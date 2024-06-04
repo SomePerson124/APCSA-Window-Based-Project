@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
 
     private Card cards;
-
     private BufferedImage background;
     private BufferedImage cardTable;
     private Elixir elixir;
@@ -40,7 +39,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     public GraphicsPanel() {
 
-        cards = new Card(0, 0, "hi");
+        cards = new Card(0, 500);
 
         try {
             background = ImageIO.read(new File("src/Assets/background.png"));

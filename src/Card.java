@@ -7,43 +7,36 @@ import java.util.ArrayList;
 public class Card {
 
     private BufferedImage image;
-    private BufferedImage[] cards;
-    private ArrayList<Integer> used;
+    private ArrayList<BufferedImage> cards;
+    private ArrayList<Integer> cardNums;
     private int xCoord;
     private int yCoord;
 
-    public Card(int x, int y, String png) {
-        cards = new BufferedImage[5];
-        used = new ArrayList<Integer>();
-        int random = (int) (Math.random() * 5) + 1;
-        for (int i = 0; i < cards.length; i++) {
-            used.add(random);
-            try {
-                if (random == 1) {
-                    cards[i] = ImageIO.read(new File("src/Assets/log.png"));
-                    System.out.println("log");
-                } else if (random == 2) {
-                    cards[i] = ImageIO.read(new File("src/Assets/corn.png"));
-                    System.out.println("corn");
-                } else if (random == 3) {
-                    cards[i] = ImageIO.read(new File("src/Assets/apple.png"));
-                    System.out.println("apple");
-                } else if (random == 4) {
-                    cards[i] = ImageIO.read(new File("src/Assets/watermelon.png"));
-                    System.out.println("watermelon");
-                } else {
-                    cards[i] = ImageIO.read(new File("src/Assets/orange.png"));
-                    System.out.println("orange");
-                }
-                random = (int) (Math.random() * 5) + 1;
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+    public Card(int x, int y) {
+        cards = new ArrayList<BufferedImage>();
+        cardNums = new ArrayList<Integer>();
         xCoord = x;
         yCoord = y;
     }
 
+    public void randomArray() {
+        for (int i = 0; i < 5; i++) {
+            int randInt = (int) (Math.random() * 5) + 1;
+            while (!isAvailable(randInt)) {
+                randInt = (int) (Math.random() * 5) + 1;
+            }
+            cardNums.add(randInt);
+            System.out.println(cardNums.get(i));
+        }
+    }
 
+    public boolean isAvailable(int num) {
+        for (int i = 0; i < cardNums.size(); i++) {
+            if (cardNums.get(i) == num) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
