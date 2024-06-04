@@ -83,7 +83,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         addMouseListener(this);
         setFocusable(true);
         requestFocusInWindow();
-
+        randomStart();
     }
 
     @Override
@@ -204,6 +204,33 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             elixir.getElixirBar()[elixir.getElixirAmt()] = true; //generates elixir
             elixir.addElixir();
         }
+    }
+
+    private ArrayList<Integer> randomStart() {
+        ArrayList<Integer> nums = new ArrayList<Integer>();
+        ArrayList<Integer> numsUsed = new ArrayList<>();
+        int randomNum = (int) (Math.random() * 5) + 1;
+        for (int i = 0; i < 5; i++) {
+            while (!isAvailable(numsUsed, randomNum)) {
+                randomNum = (int) (Math.random() * 5) + 1;
+            }
+            nums.add(randomNum);
+            useNum(numsUsed, randomNum);
+        }
+        return nums;
+    }
+
+    private boolean isAvailable(ArrayList<Integer> numsUsed, int numToUse) {
+        for (int i = 0; i  < numsUsed.size(); i++) {
+            if (numsUsed.get(i) == numToUse) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void useNum(ArrayList<Integer> numsUsed, int num) {
+        numsUsed.add(num);
     }
 
 }
