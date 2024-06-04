@@ -21,6 +21,11 @@ public class Elixir {
     }
 
     public void useElixir(int elixirUsed) {
+        for (int i = 0; i < elixirBar.length; i++) {
+            if (i >= elixirAmt - elixirUsed) {
+                elixirBar[i] = false;
+            }
+        }
         elixirAmt -= elixirUsed;
     }
 
