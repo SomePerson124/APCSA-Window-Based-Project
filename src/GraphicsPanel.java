@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
@@ -33,9 +34,12 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private Tower enemyTowerRight;
     private MainTower mainTower;
     private MainTower enemyMainTower;
-    private ArrayList<Placeholder> placeholders;
     private ArrayList<Card> cards;
+    private ArrayList<Card> cardsInUse;
+    private boolean[] pressedKeys;
+    private Point mouseClickLocation;
     private Timer timer;
+    private Timer messageTimer;
 
     public GraphicsPanel() {
 
@@ -76,11 +80,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         mainTower = new MainTower(209, 405, "player");
         enemyMainTower = new MainTower(209, 20, "enemy");
 
-        placeholders = new ArrayList<>();
         cards = randomStart();
-        System.out.println(cards.get(0).getTroop());
+        cardsInUse = new ArrayList<Card>();
+        pressedKeys = new boolean[128];
+        mouseClickLocation = new Point(0, 0);
         timer = new Timer(2800, this);
         timer.start();
+        messageTimer = new Timer(1000, this);
 
         addKeyListener(this);
         addMouseListener(this);
@@ -174,29 +180,72 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             g.drawRect(i, 615, 40, 30); //draws elixir bar
         }
 
-        for (int i = 0; i < placeholders.size(); i++) {
-            Placeholder placeholder = placeholders.get(i);
-            g.drawImage(placeholder.getImage(), placeholder.getxCoord(), placeholder.getyCoord(), null);
+        if (pressedKeys[49] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
+            Apple apple = new Apple("src/Assets/appleplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+            if (elixir.getElixirAmt() >= apple.getElixirCost()) {
+                elixir.useElixir(apple.getElixirCost());
+                cardsInUse.add(apple);
+            }
+        } else if (pressedKeys[50] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
+            Corn corn = new Corn("src/Assets/cornplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+            if (elixir.getElixirAmt() >= corn.getElixirCost()) {
+                elixir.useElixir(corn.getElixirCost());
+                cardsInUse.add(corn);
+            }
+        } else if (pressedKeys[51] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
+            Log log = new Log("src/Assets/logplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+            if (elixir.getElixirAmt() >= log.getElixirCost()) {
+                elixir.useElixir(log.getElixirCost());
+                cardsInUse.add(log);
+            }
+        } else if (pressedKeys[52] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
+            Watermelon watermelon = new Watermelon("src/Assets/watermelonplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+            if (elixir.getElixirAmt() >= watermelon.getElixirCost()) {
+                elixir.useElixir(watermelon.getElixirCost());
+                cardsInUse.add(watermelon);
+            }
+        } else if (pressedKeys[53] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
+            Orange orange = new Orange("src/Assets/orangeplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+            if (elixir.getElixirAmt() >= orange.getElixirCost()) {
+                elixir.useElixir(orange.getElixirCost());
+                cardsInUse.add(orange);
+            }
         }
+
+        for (int i = 0; i < cardsInUse.size(); i++) {
+            Card card = cardsInUse.get(i);
+            g.drawImage(card.getGameImage(), card.getxCoord(), card.getyCoord(), null);
+        }
+
+        mouseClickLocation = new Point(0, 0);
 
     }
 
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
-    public void keyPressed(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {
+        //key codes found here
+        //https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
+        int key = e.getKeyCode();
+        pressedKeys[key] = true;
+    }
 
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+        pressedKeys[key] = false;
+    }
 
-    public void mouseClicked(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {
+    }
 
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            mouseClickLocation = e.getPoint();
+        }
+    }
 
     public void mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            Point mouseClickLocation = e.getPoint();
-            Placeholder placeholder = new Placeholder(mouseClickLocation.x, mouseClickLocation.y);
-            placeholders.add(placeholder);
-        }
     }
 
     public void mouseEntered(MouseEvent e) {}
