@@ -39,7 +39,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private boolean[] pressedKeys;
     private Point mouseClickLocation;
     private Timer timer;
-    private Timer messageTimer;
 
     public GraphicsPanel() {
 
@@ -86,7 +85,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         mouseClickLocation = new Point(0, 0);
         timer = new Timer(2800, this);
         timer.start();
-        messageTimer = new Timer(1000, this);
 
         addKeyListener(this);
         addMouseListener(this);
@@ -180,35 +178,41 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             g.drawRect(i, 615, 40, 30); //draws elixir bar
         }
 
-        if (pressedKeys[49] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
-            Apple apple = new Apple("src/Assets/appleplayer.png", mouseClickLocation.x, mouseClickLocation.y);
-            if (elixir.getElixirAmt() >= apple.getElixirCost()) {
-                elixir.useElixir(apple.getElixirCost());
-                cardsInUse.add(apple);
+        if (mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
+            Card card = null;
+            int cardNum = 0;
+            if (pressedKeys[49]) {
+                cardNum = 0;
+                card = cards.get(0);
+            } else if (pressedKeys[50]) {
+                cardNum = 1;
+                card = cards.get(1);
+            } else if (pressedKeys[51]) {
+                cardNum = 2;
+                card = cards.get(2);
+            } else if (pressedKeys[52]) {
+                cardNum = 3;
+                card = cards.get(3);
             }
-        } else if (pressedKeys[50] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
-            Corn corn = new Corn("src/Assets/cornplayer.png", mouseClickLocation.x, mouseClickLocation.y);
-            if (elixir.getElixirAmt() >= corn.getElixirCost()) {
-                elixir.useElixir(corn.getElixirCost());
-                cardsInUse.add(corn);
-            }
-        } else if (pressedKeys[51] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
-            Log log = new Log("src/Assets/logplayer.png", mouseClickLocation.x, mouseClickLocation.y);
-            if (elixir.getElixirAmt() >= log.getElixirCost()) {
-                elixir.useElixir(log.getElixirCost());
-                cardsInUse.add(log);
-            }
-        } else if (pressedKeys[52] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
-            Watermelon watermelon = new Watermelon("src/Assets/watermelonplayer.png", mouseClickLocation.x, mouseClickLocation.y);
-            if (elixir.getElixirAmt() >= watermelon.getElixirCost()) {
-                elixir.useElixir(watermelon.getElixirCost());
-                cardsInUse.add(watermelon);
-            }
-        } else if (pressedKeys[53] && mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
-            Orange orange = new Orange("src/Assets/orangeplayer.png", mouseClickLocation.x, mouseClickLocation.y);
-            if (elixir.getElixirAmt() >= orange.getElixirCost()) {
-                elixir.useElixir(orange.getElixirCost());
-                cardsInUse.add(orange);
+            if (card != null) {
+                if (card.getTroop().equals("Apple")) {
+                    card = new Apple("src/Assets/appleplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+                } else if (card.getTroop().equals("Corn")) {
+                    card = new Corn("src/Assets/cornplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+                } else if (card.getTroop().equals("Log")) {
+                    card = new Log("src/Assets/logplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+                } else if (card.getTroop().equals("Watermelon")) {
+                    card = new Watermelon("src/Assets/watermelonplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+                } else if (card.getTroop().equals("Orange")) {
+                    card = new Orange("src/Assets/orangeplayer.png", mouseClickLocation.x, mouseClickLocation.y);
+                }
+                if (elixir.getElixirAmt() >= card.getElixirCost()) {
+                    elixir.useElixir(card.getElixirCost());
+                    cardsInUse.add(card);
+                    Card removed = cards.remove(cardNum);
+                    cards.add(cardNum, cards.get(3));
+                    cards.add(4, removed);
+                }
             }
         }
 
