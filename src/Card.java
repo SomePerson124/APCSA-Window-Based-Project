@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +10,7 @@ public class Card {
     private String troop;
     private BufferedImage gameImage;
     private BufferedImage cardImage;
+    private int originalHealth;
     private int health;
     private int damage;
     private int range;
@@ -16,6 +18,7 @@ public class Card {
     private double xCoord;
     private double yCoord;
     private double movementSpeed;
+    private BufferedImage healthBar;
 
     public Card(String troop, String gameFile, String cardFile, int x, int y, int health, int damage, int range, int elixirCost, double speed) {
         this.troop = troop;
@@ -25,6 +28,7 @@ public class Card {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        originalHealth = health;
         this.health = health;
         this.damage = damage;
         this.range = range;
@@ -32,6 +36,11 @@ public class Card {
         xCoord = x;
         yCoord = y;
         movementSpeed = speed;
+        try {
+            this.healthBar = ImageIO.read(new File("src/Assets/healthbar.png"));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void moveUp() {
@@ -62,6 +71,10 @@ public class Card {
         return cardImage;
     }
 
+    public BufferedImage getHealthBar() {
+        return healthBar;
+    }
+
     public int getHealth() {
         return health;
     }
@@ -86,8 +99,16 @@ public class Card {
         return (int) yCoord;
     }
 
+    private Image setHealthBar(int healthLost) {
+        int scale = originalHealth / 30;
+        int healthLostScaled = healthLost / scale;
+        Image healthNew = healthBar.getScaledInstance(30 - healthLostScaled, healthBar.getHeight(), Image.SCALE_DEFAULT);
+        return healthNew;
+    }
+
     public void loseHealth(int hp) {
         health -= hp;
+        setHealthBar(hp);
     }
 
 }

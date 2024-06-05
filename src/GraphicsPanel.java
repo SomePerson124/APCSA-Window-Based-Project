@@ -219,6 +219,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         for (int i = 0; i < cardsInUse.size(); i++) {
             Card card = cardsInUse.get(i);
             g.drawImage(card.getGameImage(), card.getxCoord(), card.getyCoord(), null);
+            g.drawImage(cardsInUse.get(i).getHealthBar(), card.getxCoord(), card.getyCoord() - 10, null);
         }
 
         isTouchingTower();
