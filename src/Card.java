@@ -15,8 +15,9 @@ public class Card {
     private int elixirCost;
     private double xCoord;
     private double yCoord;
+    private double movementSpeed;
 
-    public Card(String troop, String gameFile, String cardFile, int x, int y, int health, int damage, int range, int elixirCost) {
+    public Card(String troop, String gameFile, String cardFile, int x, int y, int health, int damage, int range, int elixirCost, double speed) {
         this.troop = troop;
         try {
             gameImage = ImageIO.read(new File(gameFile));
@@ -30,6 +31,23 @@ public class Card {
         this.elixirCost = elixirCost;
         xCoord = x;
         yCoord = y;
+        movementSpeed = speed;
+    }
+
+    public void moveUp() {
+        yCoord -= movementSpeed;
+    }
+
+    public void moveDown() {
+        yCoord += movementSpeed;
+    }
+
+    public void moveLeft() {
+        xCoord -= movementSpeed;
+    }
+
+    public void moveRight() {
+        xCoord += movementSpeed;
     }
 
     public String getTroop() {
