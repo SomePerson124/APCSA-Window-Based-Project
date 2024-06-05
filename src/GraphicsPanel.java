@@ -303,13 +303,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     }
 
     private boolean isTouchingTower() {
-        if (mouseClickLocation.x > 20 && mouseClickLocation.x < 100 && mouseClickLocation.y > 345 && mouseClickLocation.y < 420) {
+        if (mouseClickLocation.x > 20 && mouseClickLocation.x < 100 && mouseClickLocation.y > 355 && mouseClickLocation.y < 420) {
             return true;
         }
-        if (mouseClickLocation.x > 352 && mouseClickLocation.x < 432 && mouseClickLocation.y > 345 && mouseClickLocation.y < 420) {
+        if (mouseClickLocation.x > 352 && mouseClickLocation.x < 432 && mouseClickLocation.y > 355 && mouseClickLocation.y < 420) {
             return true;
         }
-        if (mouseClickLocation.x > 179 && mouseClickLocation.x < 274 && mouseClickLocation.y > 380 && mouseClickLocation.y < 470) {
+        if (mouseClickLocation.x > 179 && mouseClickLocation.x < 274 && mouseClickLocation.y > 385 && mouseClickLocation.y < 470) {
             return true;
         }
         return false;
