@@ -83,7 +83,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         cardsInUse = new ArrayList<Card>();
         pressedKeys = new boolean[128];
         mouseClickLocation = new Point(0, 0);
-        timer = new Timer(2800, this);
+        timer = new Timer(800, this);
         timer.start();
 
         addKeyListener(this);
@@ -178,7 +178,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             g.drawRect(i, 615, 40, 30); //draws elixir bar
         }
 
-        if (mouseClickLocation.y > 260 && mouseClickLocation.y < 460) {
+        if (mouseClickLocation.y > 260 && mouseClickLocation.y < 460 && !isTouchingTower()) {
             Card card = null;
             int cardNum = 0;
             if (pressedKeys[49]) {
@@ -220,6 +220,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             Card card = cardsInUse.get(i);
             g.drawImage(card.getGameImage(), card.getxCoord(), card.getyCoord(), null);
         }
+
+        isTouchingTower();
 
         mouseClickLocation = new Point(0, 0);
 
@@ -298,6 +300,19 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     private void useNum(ArrayList<Integer> numsUsed, int num) {
         numsUsed.add(num);
+    }
+
+    private boolean isTouchingTower() {
+        if (mouseClickLocation.x > 20 && mouseClickLocation.x < 100 && mouseClickLocation.y > 345 && mouseClickLocation.y < 420) {
+            return true;
+        }
+        if (mouseClickLocation.x > 352 && mouseClickLocation.x < 432 && mouseClickLocation.y > 345 && mouseClickLocation.y < 420) {
+            return true;
+        }
+        if (mouseClickLocation.x > 179 && mouseClickLocation.x < 274 && mouseClickLocation.y > 380 && mouseClickLocation.y < 470) {
+            return true;
+        }
+        return false;
     }
 
 }
