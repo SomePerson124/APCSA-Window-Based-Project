@@ -265,6 +265,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             }
                         }
                     }
+                } else {
+                    card.moveUp();
                 }
             }
         }
