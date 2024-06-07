@@ -104,6 +104,13 @@ public class Card {
         setHealthBar(hp);
     }
 
+    public Rectangle cardRect() {
+        int imageWidth = cardImage.getWidth();
+        int imageHeight = cardImage.getHeight();
+        Rectangle rect = new Rectangle((int) xCoord, (int) yCoord, imageWidth, imageHeight);
+        return rect;
+    }
+
     private void setHealthBar(int healthLost) {
         int scale = originalHealth / 30;
         int healthLostScaled = healthLost / scale;
