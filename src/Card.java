@@ -18,7 +18,7 @@ public class Card {
     private double xCoord;
     private double yCoord;
     private double movementSpeed;
-    private BufferedImage healthBar;
+    private Image healthBar;
 
     public Card(String troop, String gameFile, String cardFile, int x, int y, int health, int damage, int range, int elixirCost, double speed) {
         this.troop = troop;
@@ -71,7 +71,7 @@ public class Card {
         return cardImage;
     }
 
-    public BufferedImage getHealthBar() {
+    public Image getHealthBar() {
         return healthBar;
     }
 
@@ -99,16 +99,20 @@ public class Card {
         return (int) yCoord;
     }
 
-    private Image setHealthBar(int healthLost) {
-        int scale = originalHealth / 30;
-        int healthLostScaled = healthLost / scale;
-        Image healthNew = healthBar.getScaledInstance(30 - healthLostScaled, healthBar.getHeight(), Image.SCALE_DEFAULT);
-        return healthNew;
-    }
-
     public void loseHealth(int hp) {
         health -= hp;
         setHealthBar(hp);
+    }
+
+    private void setHealthBar(int healthLost) {
+        int scale = originalHealth / 30;
+        int healthLostScaled = healthLost / scale;
+        int width = healthBar.getWidth(null) - healthLostScaled;
+        if (width <= 0) {
+            width = 1;
+        }
+        Image healthNew = healthBar.getScaledInstance(width, healthBar.getHeight(null), Image.SCALE_DEFAULT);
+        healthBar = healthNew;
     }
 
 }

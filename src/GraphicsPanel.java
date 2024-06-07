@@ -99,6 +99,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         super.paintComponent(g);
 
         g.drawImage(background, 0, 0, null);
+        g.drawRect(240, 0, 0, 700); // draws halfway divisor
         g.drawImage(cardTable, 0, 490, null);
         g.drawString("Next: ", 10, 530);
 
@@ -141,17 +142,36 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         g.drawRect(50, 70, 50, 50); //draws enemy tower 1
         g.drawRect(382, 70, 50, 50); //draws enemy tower 2
 
-        g.drawImage(enemyMainTower.getImage(), enemyMainTower.getxCoord(), enemyMainTower.getyCoord(), null); //draws enemy main tower
-        g.drawImage(enemyTowerLeft.getImage(), enemyTowerLeft.getxCoord(), enemyTowerLeft.getyCoord(), null); //draws enemy tower 1
-        g.drawImage(enemyTowerRight.getImage(), enemyTowerRight.getxCoord(), enemyTowerRight.getyCoord(), null); //draws enemy tower 2
+        if (enemyMainTower.getTowerHealth() > 0) {
+            g.drawImage(enemyMainTower.getImage(), enemyMainTower.getxCoord(), enemyMainTower.getyCoord(), null); //draws enemy main tower
+            g.drawImage(enemyMainTower.getHealthBar(), enemyMainTower.getxCoord() + 17, enemyMainTower.getyCoord() - 10, null);
+        }
+        if (enemyTowerLeft.getTowerHealth() > 0) {
+            g.drawImage(enemyTowerLeft.getImage(), enemyTowerLeft.getxCoord(), enemyTowerLeft.getyCoord(), null); //draws enemy tower 1
+            g.drawImage(enemyTowerLeft.getHealthBar(), enemyTowerLeft.getxCoord() + 10, enemyTowerLeft.getyCoord() - 10, null);
+        }
+        if (enemyTowerRight.getTowerHealth() > 0) {
+            g.drawImage(enemyTowerRight.getImage(), enemyTowerRight.getxCoord(), enemyTowerRight.getyCoord(), null); //draws enemy tower 2
+            g.drawImage(enemyTowerRight.getHealthBar(), enemyTowerRight.getxCoord() + 10, enemyTowerRight.getyCoord() - 10, null);
+        }
 
         g.drawRect(209, 405, 65, 65); //draw main tower
         g.drawRect(50, 370, 50, 50); //draws tower 1
         g.drawRect(382, 370, 50, 50); //draws tower 2
 
-        g.drawImage(mainTower.getImage(), mainTower.getxCoord(), mainTower.getyCoord(), null); //draws main tower
-        g.drawImage(towerLeft.getImage(), towerLeft.getxCoord(), towerLeft.getyCoord(), null); //draws tower 1
-        g.drawImage(towerRight.getImage(), towerRight.getxCoord(), towerRight.getyCoord(), null); //draws tower 2
+        if (mainTower.getTowerHealth() > 0) {
+            g.drawImage(mainTower.getImage(), mainTower.getxCoord(), mainTower.getyCoord(), null); //draws main tower
+            g.drawImage(mainTower.getHealthBar(), mainTower.getxCoord() + 17, mainTower.getyCoord() - 10, null);
+        }
+        if (towerLeft.getTowerHealth() > 0) {
+            g.drawImage(towerLeft.getImage(), towerLeft.getxCoord(), towerLeft.getyCoord(), null); //draws tower 1
+            g.drawImage(towerLeft.getHealthBar(), towerLeft.getxCoord() + 10, towerLeft.getyCoord() - 10, null);
+        }
+        if (towerRight.getTowerHealth() > 0) {
+            g.drawImage(towerRight.getImage(), towerRight.getxCoord(), towerRight.getyCoord(), null); //draws tower 2
+            g.drawImage(towerRight.getHealthBar(), towerRight.getxCoord() + 10, towerRight.getyCoord() - 10, null);
+
+        }
 
         g.drawRect(0, 230,500, 30); //draws river
         g.drawRect(60, 230, 30, 30); //draws bridge (left)
@@ -218,11 +238,32 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
         for (int i = 0; i < cardsInUse.size(); i++) {
             Card card = cardsInUse.get(i);
-            g.drawImage(card.getGameImage(), card.getxCoord(), card.getyCoord(), null);
-            g.drawImage(cardsInUse.get(i).getHealthBar(), card.getxCoord(), card.getyCoord() - 10, null);
+            if (card.getHealth() > 0) {
+                g.drawImage(card.getGameImage(), card.getxCoord(), card.getyCoord(), null);
+                if (!(card instanceof Log)) {
+                    g.drawImage(cardsInUse.get(i).getHealthBar(), card.getxCoord(), card.getyCoord() - 10, null);
+                    if (card.getyCoord() < 490) {
+                        if (card.getxCoord() > 240) {
+                            if (card.getxCoord() < 392) {
+                                card.moveRight();
+                            } else if (card.getxCoord() > 392) {
+                                card.moveLeft();
+                            } else {
+                                card.moveUp();
+                            }
+                        } else {
+                            if (card.getxCoord() < 60) {
+                                card.moveRight();
+                            } else if (card.getxCoord() > 60) {
+                                card.moveLeft();
+                            } else {
+                                card.moveUp();
+                            }
+                        }
+                    }
+                }
+            }
         }
-
-        isTouchingTower();
 
         mouseClickLocation = new Point(0, 0);
 
