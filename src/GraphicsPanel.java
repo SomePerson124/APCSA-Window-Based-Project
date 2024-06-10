@@ -39,6 +39,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private boolean[] pressedKeys;
     private Point mouseClickLocation;
     private Timer timer;
+    private int logMoves;
 
     public GraphicsPanel() {
 
@@ -85,6 +86,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         mouseClickLocation = new Point(0, 0);
         timer = new Timer(800, this);
         timer.start();
+
+        logMoves = 0;
 
         addKeyListener(this);
         addMouseListener(this);
@@ -266,7 +269,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                         }
                     }
                 } else {
-                    card.moveUp();
+                    if (logMoves < 400) {
+                        card.moveUp();
+                        logMoves++;
+                    } else {
+                        card.loseHealth(card.getHealth());
+                        logMoves = 0;
+                    }
                 }
             }
         }
