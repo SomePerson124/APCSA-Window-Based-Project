@@ -40,6 +40,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private Point mouseClickLocation;
     private Timer timer;
     private int logMoves;
+    private double arrowY;
 
     public GraphicsPanel() {
 
@@ -88,6 +89,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         timer.start();
 
         logMoves = 0;
+        arrowY = 90;
 
         addKeyListener(this);
         addMouseListener(this);
@@ -265,6 +267,30 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                                 if (!card.cardRect().intersects(enemyTowerLeft.towerRect()) && !card.cardRect().intersects(enemyTowerRight.towerRect())) {
                                     card.moveUp();
                                 }
+                            }
+                        }
+                    }
+                    if (card.cardRect().intersects(enemyTowerLeft.towerRange(0, 0))) {
+                        if (card.getHealth() >= card.getHealth() - enemyTowerLeft.getTowerDamage()) {
+                            g.drawImage(enemyTowerLeft.getArrowImage(), 72, (int) arrowY, null);
+                            if (enemyTowerLeft.arrowRect(72, (int) arrowY).intersects(card.cardRect())) {
+                                card.loseHealth(enemyTowerLeft.getTowerDamage());
+                                arrowY = 90;
+                                System.out.println("LEFT HIT");
+                            } else {
+                                arrowY += 0.1;
+                            }
+                        }
+                    }
+                    if (card.cardRect().intersects(enemyTowerRight.towerRange(240, 0))) {
+                        if (card.getHealth() >= card.getHealth() - enemyTowerRight.getTowerDamage()) {
+                            g.drawImage(enemyTowerRight.getArrowImage(), 403, (int) arrowY, null);
+                            if (enemyTowerRight.arrowRect(403, (int) arrowY).intersects(card.cardRect())) {
+                                card.loseHealth(enemyTowerRight.getTowerDamage());
+                                arrowY = 90;
+                                System.out.println("RIGHT HIT");
+                            } else {
+                                arrowY += 0.1;
                             }
                         }
                     }
