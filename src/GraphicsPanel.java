@@ -92,7 +92,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         cardsInUse = new ArrayList<Card>();
         pressedKeys = new boolean[128];
         mouseClickLocation = new Point(0, 0);
-        timer = new Timer(100, this);
+        timer = new Timer(500, this);
         timer.start();
 
         logMoves = 0;
