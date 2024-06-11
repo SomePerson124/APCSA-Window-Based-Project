@@ -373,11 +373,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             card.moveUp();
                         }
                     }
-                    if (card.getyCoord() < 45 && !card.rangeRect().intersects(enemyMainTower.mainTowerRect())) {
+                    if (card.getyCoord() < 45 && !card.rangeRect().intersects(enemyMainTower.mainTowerRect()) && card.getxCoord() < 240) {
+                        System.out.println("hi");
                         card.moveRight();
                         card.moveRight();
                     }
-                    if (card.getyCoord() < 45 && !card.rangeRect().intersects(enemyMainTower.mainTowerRect())) {
+                    if (card.getyCoord() < 45 && !card.rangeRect().intersects(enemyMainTower.mainTowerRect()) && card.getxCoord() > 240) {
+                        System.out.println("bye");
                         card.moveLeft();
                         card.moveLeft();
                     }
