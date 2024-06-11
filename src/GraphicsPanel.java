@@ -295,7 +295,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             }
                         }
                     }
-                    if (enemyTowerRight.getTowerHealth() > 0 && card.cardRect().intersects(enemyTowerRight.towerRange(240, 0))) {
+                    if (enemyTowerRight.getTowerHealth() > 0 && card.cardRect().intersects(enemyTowerRight.towerRange(260, 0))) {
                         if (card.getHealth() >= card.getHealth() - enemyTowerRight.getTowerDamage()) {
                             g.drawImage(enemyTowerRight.getArrowImage(), 403, (int) arrowYRightE, null);
                             if (enemyTowerRight.arrowRect(403, (int) arrowYRightE).intersects(card.cardRect())) {
@@ -363,21 +363,23 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             }
                         }
                     }
-                    if (enemyTowerLeft.getTowerHealth() <= 0 && card.getyCoord() > 15) {
+                    if (enemyTowerLeft.getTowerHealth() <= 0 && card.getyCoord() <= 230 && card.getyCoord() >= 45) {
                         if (card.getxCoord() < 240) {
                             card.moveUp();
                         }
                     }
-                    if (enemyTowerRight.getTowerHealth() <= 0 && card.getyCoord() > 15) {
+                    if (enemyTowerRight.getTowerHealth() <= 0 && card.getyCoord() <= 230 && card.getyCoord() >= 45) {
                         if (card.getxCoord() > 240) {
                             card.moveUp();
                         }
                     }
-                    if (card.getyCoord() <= 15 && card.getxCoord() < 240) {
-                        System.out.println("should move right");
+                    if (card.getyCoord() < 45 && !card.rangeRect().intersects(enemyMainTower.mainTowerRect())) {
+                        card.moveRight();
+                        card.moveRight();
                     }
-                    if (card.getyCoord() <= 15 && card.getxCoord() > 240) {
-                        System.out.println("should move left");
+                    if (card.getyCoord() < 45 && !card.rangeRect().intersects(enemyMainTower.mainTowerRect())) {
+                        card.moveLeft();
+                        card.moveLeft();
                     }
                 } else {
                     if (logMoves < 400) {
