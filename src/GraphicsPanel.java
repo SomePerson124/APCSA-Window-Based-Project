@@ -91,7 +91,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         cardsInUse = new ArrayList<Card>();
         pressedKeys = new boolean[128];
         mouseClickLocation = new Point(0, 0);
-        timer = new Timer(500, this);
+        timer = new Timer(100, this);
         timer.start();
 
         logMoves = 0;
@@ -363,12 +363,32 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             }
                         }
                     }
+                    if (enemyTowerLeft.getTowerHealth() <= 0 && card.getyCoord() > 15) {
+                        if (card.getxCoord() < 240) {
+                            card.moveUp();
+                        }
+                    }
+                    if (enemyTowerRight.getTowerHealth() <= 0 && card.getyCoord() > 15) {
+                        if (card.getxCoord() > 240) {
+                            card.moveUp();
+                        }
+                    }
+                    if (card.getyCoord() <= 15 && card.getxCoord() < 240) {
+                        System.out.println("should move right");
+                    }
+                    if (card.getyCoord() <= 15 && card.getxCoord() > 240) {
+                        System.out.println("should move left");
+                    }
                 } else {
                     if (logMoves < 400) {
                         card.moveUp();
                         logMoves++;
                         if (card.cardRect().intersects(enemyTowerLeft.towerRect()) && logHits != 1) {
                             enemyTowerLeft.loseTowerHealth(card.getDamage());
+                            logHits++;
+                        }
+                        if (card.cardRect().intersects(enemyTowerRight.towerRect()) && logHits != 1) {
+                            enemyTowerRight.loseTowerHealth(card.getDamage());
                             logHits++;
                         }
                     } else {
