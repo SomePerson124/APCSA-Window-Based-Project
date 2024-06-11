@@ -284,7 +284,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             }
                         }
                     }
-                    if (card.cardRect().intersects(enemyTowerLeft.towerRange(0, 0))) {
+                    if (enemyTowerLeft.getTowerHealth() > 0 && card.cardRect().intersects(enemyTowerLeft.towerRange(0, 0))) {
                         if (card.getHealth() >= card.getHealth() - enemyTowerLeft.getTowerDamage()) {
                             g.drawImage(enemyTowerLeft.getArrowImage(), 72, (int) arrowYLeftE, null);
                             if (enemyTowerLeft.arrowRect(72, (int) arrowYLeftE).intersects(card.cardRect())) {
@@ -295,7 +295,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             }
                         }
                     }
-                    if (card.cardRect().intersects(enemyTowerRight.towerRange(240, 0))) {
+                    if (enemyTowerRight.getTowerHealth() > 0 && card.cardRect().intersects(enemyTowerRight.towerRange(240, 0))) {
                         if (card.getHealth() >= card.getHealth() - enemyTowerRight.getTowerDamage()) {
                             g.drawImage(enemyTowerRight.getArrowImage(), 403, (int) arrowYRightE, null);
                             if (enemyTowerRight.arrowRect(403, (int) arrowYRightE).intersects(card.cardRect())) {
@@ -306,7 +306,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             }
                         }
                     }
-                    if (card.rangeRect().intersects(enemyTowerLeft.towerRect())) {
+                    if (enemyTowerLeft.getTowerHealth() > 0 && card.rangeRect().intersects(enemyTowerLeft.towerRect())) {
                         if (card instanceof Apple) {
                             appleAttack++;
                             if (appleAttack == 800) {
@@ -333,7 +333,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             }
                         }
                     }
-                    if (card.rangeRect().intersects(enemyTowerRight.towerRect())) {
+                    if (enemyTowerRight.getTowerHealth() > 0 && card.rangeRect().intersects(enemyTowerRight.towerRect())) {
                         if (card instanceof Apple) {
                             appleAttack++;
                             if (appleAttack == 800) {
