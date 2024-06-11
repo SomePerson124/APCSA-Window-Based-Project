@@ -3,7 +3,7 @@ import java.awt.*;
 public class Watermelon extends Card {
 
     public Watermelon(String gameFile, int x, int y) {
-        super("Watermelon", gameFile, "src/Assets/watermelon.png", x, y, 4500, 370, 2, 5, 0.1);
+        super("Watermelon", gameFile, "src/Assets/watermelon.png", x, y, 4500, 370, 5, 0.1);
     }
 
     @Override

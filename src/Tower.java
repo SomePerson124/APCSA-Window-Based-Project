@@ -13,8 +13,6 @@ public class Tower {
     private Image healthBar;
     private int towerHealth;
     private int towerDamage;
-    private int attackSpeed;
-    private int attackRange;
     private int originalHealth;
     private int xCoord;
     private int yCoord;
@@ -33,7 +31,6 @@ public class Tower {
         }
         towerHealth = 4000;
         towerDamage = 150;
-        attackSpeed = 800;
         originalHealth = 4000;
         xCoord = x;
         yCoord = y;

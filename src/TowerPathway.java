@@ -38,11 +38,4 @@ public class TowerPathway {
         return image;
     }
 
-    public Rectangle towerPathwayRect() {
-        int imageWidth = getImage().getWidth();
-        int imageHeight = getImage().getHeight();
-        Rectangle rect = new Rectangle(xCoord, yCoord, imageWidth, imageHeight);
-        return rect;
-    }
-
 }

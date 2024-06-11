@@ -1,5 +1,4 @@
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,13 +29,6 @@ public class River {
 
     public int getyCoord() {
         return yCoord;
-    }
-
-    public Rectangle riverRect() {
-        int imageWidth = getImage().getWidth();
-        int imageHeight = getImage().getHeight();
-        Rectangle rect = new Rectangle(xCoord, yCoord, imageWidth, imageHeight);
-        return rect;
     }
 
 }

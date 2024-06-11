@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
@@ -43,6 +42,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private int logHits;
     private double arrowYLeftE;
     private double arrowYRightE;
+    private double cannonballXLeftE;
+    private double cannonballXRightE;
     private int appleAttack;
     private int cornAttack;
     private int watermelonAttack;
@@ -99,6 +100,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
         arrowYLeftE = 90;
         arrowYRightE = 90;
+        cannonballXLeftE = 240;
+        cannonballXRightE = 240;
 
         appleAttack = 0;
         cornAttack = 0;
@@ -363,6 +366,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             }
                         }
                     }
+                    if (enemyTowerLeft.getTowerHealth() <= 0 || enemyTowerRight.getTowerHealth() <= 0) {
+                        enemyMainTower.setAttackMode("enemy");
+                    }
                     if (enemyTowerLeft.getTowerHealth() <= 0 && card.getyCoord() <= 230 && card.getyCoord() >= 45) {
                         if (card.getxCoord() < 240) {
                             card.moveUp();
@@ -374,14 +380,64 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                         }
                     }
                     if (card.getyCoord() < 45 && !card.rangeRect().intersects(enemyMainTower.mainTowerRect()) && card.getxCoord() < 240) {
-                        System.out.println("hi");
                         card.moveRight();
                         card.moveRight();
                     }
                     if (card.getyCoord() < 45 && !card.rangeRect().intersects(enemyMainTower.mainTowerRect()) && card.getxCoord() > 240) {
-                        System.out.println("bye");
                         card.moveLeft();
                         card.moveLeft();
+                    }
+                    if (card.rangeRect().intersects(enemyMainTower.mainTowerRect())) {
+                        if (card instanceof Apple) {
+                            appleAttack++;
+                            if (appleAttack == 800) {
+                                enemyMainTower.loseTowerHealth(card.getDamage());
+                                appleAttack = 0;
+                            }
+                        } else if (card instanceof Corn) {
+                            cornAttack++;
+                            if (cornAttack == 500) {
+                                enemyMainTower.loseTowerHealth(card.getDamage());
+                                cornAttack = 0;
+                            }
+                        } else if (card instanceof Watermelon) {
+                            watermelonAttack++;
+                            if (watermelonAttack == 1000) {
+                                enemyMainTower.loseTowerHealth(card.getDamage());
+                                watermelonAttack = 0;
+                            }
+                        } else if (card instanceof Orange) {
+                            orangeAttack++;
+                            if (orangeAttack == 1200) {
+                                enemyMainTower.loseTowerHealth(card.getDamage());
+                                orangeAttack = 0;
+                            }
+                        }
+                    }
+                    if (enemyMainTower.getTowerHealth() > 0 && enemyMainTower.rangeRect(enemyMainTower.getxCoord() - 67, enemyMainTower.getyCoord() - 67).intersects(card.cardRect())) {
+                        if (card.getHealth() >= card.getHealth() - enemyMainTower.getTowerDamage()) {
+                            if (card.getxCoord() > 240) {
+                                g.drawImage(enemyMainTower.getAttackImage(), (int) cannonballXRightE, 45, null);
+                                if (enemyMainTower.attackRect((int) cannonballXRightE, 45).intersects(card.cardRect())) {
+                                    card.loseHealth(enemyMainTower.getTowerDamage());
+                                    cannonballXRightE = 240;
+                                } else {
+                                    cannonballXRightE += 0.1;
+                                }
+                            } else {
+                                g.drawImage(enemyMainTower.getAttackImage(), (int) cannonballXLeftE, 45, null);
+                                if (enemyMainTower.attackRect((int) cannonballXLeftE, 45).intersects(card.cardRect())) {
+                                    card.loseHealth(enemyMainTower.getTowerDamage());
+                                    cannonballXLeftE = 240;
+                                } else {
+                                    cannonballXLeftE -= 0.1;
+                                }
+                            }
+                        }
+                    }
+                    if (enemyMainTower.getTowerHealth() <= 0) {
+                        enemyTowerLeft.loseTowerHealth(enemyTowerLeft.getTowerHealth());
+                        enemyTowerRight.loseTowerHealth(enemyTowerRight.getTowerHealth());
                     }
                 } else {
                     if (logMoves < 400) {

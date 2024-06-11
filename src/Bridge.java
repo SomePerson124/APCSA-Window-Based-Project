@@ -32,11 +32,4 @@ public class Bridge {
         return image;
     }
 
-    public Rectangle bridgeRect() {
-        int imageWidth = getImage().getWidth();
-        int imageHeight = getImage().getHeight();
-        Rectangle rect = new Rectangle(xCoord, yCoord, imageWidth, imageHeight);
-        return rect;
-    }
-
 }

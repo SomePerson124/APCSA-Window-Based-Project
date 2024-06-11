@@ -12,14 +12,13 @@ public class Card {
     private int originalHealth;
     private int health;
     private int damage;
-    private int range;
     private int elixirCost;
     private double xCoord;
     private double yCoord;
     private double movementSpeed;
     private Image healthBar;
 
-    public Card(String troop, String gameFile, String cardFile, int x, int y, int health, int damage, int range, int elixirCost, double speed) {
+    public Card(String troop, String gameFile, String cardFile, int x, int y, int health, int damage, int elixirCost, double speed) {
         this.troop = troop;
         try {
             gameImage = ImageIO.read(new File(gameFile));
@@ -30,7 +29,6 @@ public class Card {
         originalHealth = health;
         this.health = health;
         this.damage = damage;
-        this.range = range;
         this.elixirCost = elixirCost;
         xCoord = x;
         yCoord = y;
@@ -44,10 +42,6 @@ public class Card {
 
     public void moveUp() {
         yCoord -= movementSpeed;
-    }
-
-    public void moveDown() {
-        yCoord += movementSpeed;
     }
 
     public void moveLeft() {
@@ -80,10 +74,6 @@ public class Card {
 
     public int getDamage() {
         return damage;
-    }
-
-    public int getRange() {
-        return range;
     }
 
     public int getElixirCost() {
