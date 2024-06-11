@@ -268,7 +268,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             } else if (card.getxCoord() > 392) {
                                 card.moveLeft();
                             } else {
-                                if (!card.rangeRect().intersects(enemyTowerLeft.towerRect()) && !card.rangeRect().intersects(enemyTowerRight.towerRect())) {
+                                if (!card.rangeRect().intersects(enemyTowerRight.towerRect())) {
                                     card.moveUp();
                                 }
                             }
@@ -278,7 +278,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             } else if (card.getxCoord() > 60) {
                                 card.moveLeft();
                             } else {
-                                if (!card.rangeRect().intersects(enemyTowerLeft.towerRect()) && !card.rangeRect().intersects(enemyTowerRight.towerRect())) {
+                                if (!card.rangeRect().intersects(enemyTowerLeft.towerRect())) {
                                     card.moveUp();
                                 }
                             }
@@ -313,19 +313,22 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                                 enemyTowerLeft.loseTowerHealth(card.getDamage());
                                 appleAttack = 0;
                             }
-                        } else if (card instanceof Corn) {
+                        }
+                        if (card instanceof Corn) {
                             cornAttack++;
                             if (cornAttack == 500) {
                                 enemyTowerLeft.loseTowerHealth(card.getDamage());
                                 cornAttack = 0;
                             }
-                        } else if (card instanceof Watermelon) {
+                        }
+                        if (card instanceof Watermelon) {
                             watermelonAttack++;
                             if (watermelonAttack == 1000) {
                                 enemyTowerLeft.loseTowerHealth(card.getDamage());
                                 watermelonAttack = 0;
                             }
-                        } else if (card instanceof Orange) {
+                        }
+                        if (card instanceof Orange) {
                             orangeAttack++;
                             if (orangeAttack == 1200) {
                                 enemyTowerLeft.loseTowerHealth(card.getDamage());
