@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Card {
 
@@ -108,6 +107,13 @@ public class Card {
         int imageWidth = cardImage.getWidth();
         int imageHeight = cardImage.getHeight();
         Rectangle rect = new Rectangle((int) xCoord, (int) yCoord, imageWidth, imageHeight);
+        return rect;
+    }
+
+    public Rectangle rangeRect() {
+        int rangeWidth = cardImage.getWidth();
+        int rangeHeight = cardImage.getHeight();
+        Rectangle rect = new Rectangle((int) xCoord, (int) yCoord, rangeWidth, rangeHeight);
         return rect;
     }
 

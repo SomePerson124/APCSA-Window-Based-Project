@@ -40,8 +40,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private Point mouseClickLocation;
     private Timer timer;
     private int logMoves;
+    private int logHits;
     private double arrowYLeftE;
     private double arrowYRightE;
+    private int appleAttack;
+    private int cornAttack;
+    private int watermelonAttack;
+    private int orangeAttack;
 
     public GraphicsPanel() {
 
@@ -86,12 +91,19 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         cardsInUse = new ArrayList<Card>();
         pressedKeys = new boolean[128];
         mouseClickLocation = new Point(0, 0);
-        timer = new Timer(800, this);
+        timer = new Timer(500, this);
         timer.start();
 
         logMoves = 0;
+        logHits = 0;
+
         arrowYLeftE = 90;
         arrowYRightE = 90;
+
+        appleAttack = 0;
+        cornAttack = 0;
+        watermelonAttack = 0;
+        orangeAttack = 0;
 
         addKeyListener(this);
         addMouseListener(this);
@@ -256,7 +268,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             } else if (card.getxCoord() > 392) {
                                 card.moveLeft();
                             } else {
-                                if (!card.cardRect().intersects(enemyTowerLeft.towerRect()) && !card.cardRect().intersects(enemyTowerRight.towerRect())) {
+                                if (!card.rangeRect().intersects(enemyTowerLeft.towerRect()) && !card.rangeRect().intersects(enemyTowerRight.towerRect())) {
                                     card.moveUp();
                                 }
                             }
@@ -266,7 +278,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             } else if (card.getxCoord() > 60) {
                                 card.moveLeft();
                             } else {
-                                if (!card.cardRect().intersects(enemyTowerLeft.towerRect()) && !card.cardRect().intersects(enemyTowerRight.towerRect())) {
+                                if (!card.rangeRect().intersects(enemyTowerLeft.towerRect()) && !card.rangeRect().intersects(enemyTowerRight.towerRect())) {
                                     card.moveUp();
                                 }
                             }
@@ -278,7 +290,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             if (enemyTowerLeft.arrowRect(72, (int) arrowYLeftE).intersects(card.cardRect())) {
                                 card.loseHealth(enemyTowerLeft.getTowerDamage());
                                 arrowYLeftE = 90;
-                                System.out.println("LEFT HIT");
                             } else {
                                 arrowYLeftE += 0.1;
                             }
@@ -290,9 +301,62 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                             if (enemyTowerRight.arrowRect(403, (int) arrowYRightE).intersects(card.cardRect())) {
                                 card.loseHealth(enemyTowerRight.getTowerDamage());
                                 arrowYRightE = 90;
-                                System.out.println("RIGHT HIT");
                             } else {
                                 arrowYRightE += 0.1;
+                            }
+                        }
+                    }
+                    if (card.rangeRect().intersects(enemyTowerLeft.towerRect())) {
+                        if (card instanceof Apple) {
+                            appleAttack++;
+                            if (appleAttack == 800) {
+                                enemyTowerLeft.loseTowerHealth(card.getDamage());
+                                appleAttack = 0;
+                            }
+                        } else if (card instanceof Corn) {
+                            cornAttack++;
+                            if (cornAttack == 500) {
+                                enemyTowerLeft.loseTowerHealth(card.getDamage());
+                                cornAttack = 0;
+                            }
+                        } else if (card instanceof Watermelon) {
+                            watermelonAttack++;
+                            if (watermelonAttack == 1000) {
+                                enemyTowerLeft.loseTowerHealth(card.getDamage());
+                                watermelonAttack = 0;
+                            }
+                        } else if (card instanceof Orange) {
+                            orangeAttack++;
+                            if (orangeAttack == 1200) {
+                                enemyTowerLeft.loseTowerHealth(card.getDamage());
+                                orangeAttack = 0;
+                            }
+                        }
+                    }
+                    if (card.rangeRect().intersects(enemyTowerRight.towerRect())) {
+                        if (card instanceof Apple) {
+                            appleAttack++;
+                            if (appleAttack == 800) {
+                                enemyTowerRight.loseTowerHealth(card.getDamage());
+                                appleAttack = 0;
+                            }
+                        } else if (card instanceof Corn) {
+                            cornAttack++;
+                            if (cornAttack == 500) {
+                                enemyTowerRight.loseTowerHealth(card.getDamage());
+                                cornAttack = 0;
+                            }
+                        } else if (card instanceof Watermelon) {
+                            watermelonAttack++;
+                            if (watermelonAttack == 1000) {
+                                enemyTowerRight.loseTowerHealth(card.getDamage());
+                                watermelonAttack = 0;
+                            }
+                        } else if (card instanceof Orange) {
+                            orangeAttack++;
+                            if (orangeAttack == 1200) {
+                                enemyTowerRight.loseTowerHealth(card.getDamage());
+                                orangeAttack = 0;
                             }
                         }
                     }
@@ -300,11 +364,20 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                     if (logMoves < 400) {
                         card.moveUp();
                         logMoves++;
+                        if (card.cardRect().intersects(enemyTowerLeft.towerRect()) && logHits != 1) {
+                            enemyTowerLeft.loseTowerHealth(card.getDamage());
+                            logHits++;
+                        }
                     } else {
                         card.loseHealth(card.getHealth());
                         logMoves = 0;
+                        logHits = 0;
                     }
                 }
+            }
+            if (card.getHealth() <= 0) {
+                cardsInUse.remove(i);
+                i--;
             }
         }
 
